@@ -13,6 +13,7 @@
     <div v-else>Идёт загрузка...</div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
+    <my-loading v-if="isPostsLoading" />
   </div>
 </template>
 
@@ -20,10 +21,12 @@
 import PostForm from "@/component/PostForm.vue";
 import PostList from "@/component/PostList.vue";
 import axios from "axios";
+import MyLoading from "./component/UI/MyLoading.vue";
 export default {
   components: {
     PostForm,
     PostList,
+    MyLoading,
   },
   data() {
     return {
@@ -47,11 +50,13 @@ export default {
     async fetchPosts() {
       try {
         this.isError = false;
-          const response = await axios.get(
-            "https://jsonplaceholder.typicode.com/posts?_limit=10"
-          );
-          this.posts = response.data;
+        this.isPostsLoading = true;
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+        this.posts = response.data;
       } catch (e) {
+        this.isPostsLoading = true;
         this.isError = true;
       } finally {
         this.isPostsLoading = false;
