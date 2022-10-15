@@ -5,46 +5,61 @@
       <my-button @click="showDialog">Создать пост</my-button>
     </div>
 
-    <my-dialog v-model:show="dialogVisible">
+    <my-dialog v-model:show="isDialogVisible">
       <post-form @create="createPost" :posts="posts" />
     </my-dialog>
 
-    <post-list :posts="posts" @remove="removePost" />
+    <post-list :posts="posts" @remove="removePost" v-if="!isPostsLoading" />
+    <div v-else>Идёт загрузка...</div>
+
+    <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
   </div>
 </template>
 
 <script>
 import PostForm from "@/component/PostForm.vue";
 import PostList from "@/component/PostList.vue";
-import MyButton from "./component/UI/MyButton.vue";
+import axios from "axios";
 export default {
   components: {
     PostForm,
     PostList,
-    MyButton,
   },
   data() {
     return {
-      posts: [
-        { id: 1, title: "JS1", body: "JS пост1" },
-        { id: 2, title: "JS2", body: "JS пост2" },
-        { id: 3, title: "JS3", body: "JS пост3" },
-        { id: 4, title: "JS4", body: "JS пост4" },
-      ],
-      dialogVisible: false,
+      posts: [],
+      isDialogVisible: false,
+      isPostsLoading: false,
+      isError: false,
     };
   },
   methods: {
     createPost(post) {
       this.posts.push(post);
-      this.dialogVisible = false;
+      this.isDialogVisible = false;
     },
     removePost(post) {
       this.posts = this.posts.filter((p) => p.id !== post.id);
     },
     showDialog() {
-      this.dialogVisible = true;
+      this.isDialogVisible = true;
     },
+    async fetchPosts() {
+      try {
+        this.isError = false;
+          const response = await axios.get(
+            "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          );
+          this.posts = response.data;
+      } catch (e) {
+        this.isError = true;
+      } finally {
+        this.isPostsLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
