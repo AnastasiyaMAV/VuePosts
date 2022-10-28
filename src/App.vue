@@ -2,14 +2,17 @@
   <div>
     <div class="head">
       <h1>Страница с постами</h1>
-      <my-button @click="showDialog">Создать пост</my-button>
+      <div class="head__btns">
+        <my-button @click="showDialog">Создать пост</my-button>
+        <my-select v-model="selectedSort" :options="sortOptions"></my-select>
+      </div>
     </div>
 
     <my-dialog v-model:show="isDialogVisible">
       <post-form @create="createPost" :posts="posts" />
     </my-dialog>
 
-    <post-list :posts="posts" @remove="removePost" v-if="!isPostsLoading" />
+    <post-list :posts="sortedPosts" @remove="removePost" v-if="!isPostsLoading" />
     <div v-else>Идёт загрузка...</div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
@@ -21,12 +24,10 @@
 import PostForm from "@/component/PostForm.vue";
 import PostList from "@/component/PostList.vue";
 import axios from "axios";
-import MyLoading from "./component/UI/MyLoading.vue";
 export default {
   components: {
     PostForm,
     PostList,
-    MyLoading,
   },
   data() {
     return {
@@ -34,6 +35,11 @@ export default {
       isDialogVisible: false,
       isPostsLoading: false,
       isError: false,
+      selectedSort: "",
+      sortOptions: [
+        { value: "title", name: "По названию" },
+        { value: "body", name: "По содержимому" },
+      ],
     };
   },
   methods: {
@@ -66,6 +72,13 @@ export default {
   mounted() {
     this.fetchPosts();
   },
+  computed: {
+    sortedPosts(){
+      return [...this.posts].sort((post1, post2) => 
+        post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+      )
+    }
+  }
 };
 </script>
 
@@ -74,10 +87,15 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: rgb(227, 225, 225);
 }
 .head {
   margin-top: 25px;
   margin-bottom: 25px;
   text-align: center;
+}
+.head__btns {
+  display: flex;
+  justify-content: space-around;
 }
 </style>
