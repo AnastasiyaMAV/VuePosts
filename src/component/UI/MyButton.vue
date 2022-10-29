@@ -24,7 +24,6 @@ export default {
 .btn {
   width: 100px;
   height: 35px;
-  margin-top: 10px;
   background: none;
   color: blue;
   border: 1px solid blue;

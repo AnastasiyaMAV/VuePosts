@@ -2,6 +2,7 @@
   <div>
     <div class="head">
       <h1>Страница с постами</h1>
+      <my-input v-model="searchQuery" placeholder="Поиск..." />
       <div class="head__btns">
         <my-button @click="showDialog">Создать пост</my-button>
         <my-select v-model="selectedSort" :options="sortOptions"></my-select>
@@ -12,7 +13,11 @@
       <post-form @create="createPost" :posts="posts" />
     </my-dialog>
 
-    <post-list :posts="sortedPosts" @remove="removePost" v-if="!isPostsLoading" />
+    <post-list
+      :posts="sortedAndSeachedPosts"
+      @remove="removePost"
+      v-if="!isPostsLoading"
+    />
     <div v-else>Идёт загрузка...</div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
@@ -36,6 +41,7 @@ export default {
       isPostsLoading: false,
       isError: false,
       selectedSort: "",
+      searchQuery: "",
       sortOptions: [
         { value: "title", name: "По названию" },
         { value: "body", name: "По содержимому" },
@@ -73,12 +79,17 @@ export default {
     this.fetchPosts();
   },
   computed: {
-    sortedPosts(){
-      return [...this.posts].sort((post1, post2) => 
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) =>
         post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
-      )
-    }
-  }
+      );
+    },
+    sortedAndSeachedPosts() {
+      return this.sortedPosts.filter((post) =>
+        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
 };
 </script>
 
@@ -90,12 +101,12 @@ export default {
   background: rgb(227, 225, 225);
 }
 .head {
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin: 25px;
   text-align: center;
 }
 .head__btns {
   display: flex;
   justify-content: space-around;
+  padding: 5px;
 }
 </style>
