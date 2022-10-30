@@ -1,7 +1,6 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <select class="select" v-model="modelValue" @change="changeOption">
-    <option disabled value="">Выберите из списка</option>
+  <select class="select" v-model="selected" @change="changeOption">
+    <option value="">Выберите из списка</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.name }}
     </option>
@@ -10,6 +9,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selected: "",
+    };
+  },
   name: "my-select",
   props: {
     modelValue: {
@@ -22,9 +26,9 @@ export default {
   },
   methods: {
     changeOption(event) {
-      this.$emit('update:modelValue', event.target.value)
-    }
-  }
+      this.$emit("update:modelValue", event.target.value);
+    },
+  },
 };
 </script>
 

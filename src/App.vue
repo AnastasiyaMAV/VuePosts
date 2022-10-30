@@ -18,10 +18,24 @@
       @remove="removePost"
       v-if="!isPostsLoading"
     />
-    <div v-else>Идёт загрузка...</div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
     <my-loading v-if="isPostsLoading" />
+    <div ref="observer"></div>
+
+    <!-- <div class="page__wrapper">
+      <div
+        class="page"
+        :class="{
+          current_page: page === pageNumber,
+        }"
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        @click="changePage(pageNumber)"
+      >
+        {{ pageNumber }}
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,6 +56,9 @@ export default {
       isError: false,
       selectedSort: "",
       searchQuery: "",
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         { value: "title", name: "По названию" },
         { value: "body", name: "По содержимому" },
@@ -59,12 +76,25 @@ export default {
     showDialog() {
       this.isDialogVisible = true;
     },
+    // changePage(pageNumber) {
+    //   this.page = pageNumber;
+    //   this.fetchPosts();
+    // },
     async fetchPosts() {
       try {
         this.isError = false;
         this.isPostsLoading = true;
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            },
+          }
+        );
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
         );
         this.posts = response.data;
       } catch (e) {
@@ -74,9 +104,41 @@ export default {
         this.isPostsLoading = false;
       }
     },
+    async loadMorePosts() {
+      try {
+        this.page += 1;
+        this.isError = false;
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            },
+          }
+        );
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
+        this.posts = [...this.posts, ...response.data];
+      } catch (e) {
+        this.isError = true;
+      }
+    },
   },
   mounted() {
     this.fetchPosts();
+    const options = {
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+    const callback = (entries) => {
+      if (entries[0].isIntersecting) {
+        this.loadMorePosts();
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
@@ -109,4 +171,15 @@ export default {
   justify-content: space-around;
   padding: 5px;
 }
+/* .page__wrapper {
+  display: flex;
+  margin-top: 15px;
+}
+.page {
+  border: 1px solid black;
+  padding: 10px;
+}
+.current_page {
+  border: 3px solid green;
+} */
 </style>
