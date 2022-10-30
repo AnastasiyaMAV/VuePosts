@@ -18,10 +18,11 @@
       @remove="removePost"
       v-if="!isPostsLoading"
     />
+    <div ref="observer" class="observer"></div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
     <my-loading v-if="isPostsLoading" />
-    <div ref="observer"></div>
+    
 
     <!-- <div class="page__wrapper">
       <div
@@ -128,12 +129,13 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+
     const options = {
-      rootMargin: "0px",
-      threshold: 1.0,
+      rootMargin: "50px",
+      threshold: 1,
     };
     const callback = (entries) => {
-      if (entries[0].isIntersecting && this.page < this.totalPages) {
+      if (entries[0].isIntersecting) {
         this.loadMorePosts();
       }
     };
@@ -182,4 +184,5 @@ export default {
 .current_page {
   border: 3px solid green;
 } */
+
 </style>
