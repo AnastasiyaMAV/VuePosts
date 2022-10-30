@@ -133,7 +133,7 @@ export default {
       threshold: 1.0,
     };
     const callback = (entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && this.page < this.totalPages) {
         this.loadMorePosts();
       }
     };
