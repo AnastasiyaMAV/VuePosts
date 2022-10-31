@@ -19,7 +19,4 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-.app {
-  background: rgb(227, 225, 225);
-}
 </style>

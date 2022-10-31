@@ -53,5 +53,6 @@ export default {
   padding: 5px;
   border: 1px solid black;
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  cursor: pointer;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
   <div class="post">
     <div>
+      <div><strong>Номер поста:</strong> {{ post.id }}</div>
       <div><strong>Название:</strong> {{ post.title }}</div>
       <div><strong>Описание:</strong> {{ post.body }}</div>
     </div>
     <div class="post__btns" v-if="btn">
+      <my-button @click="$router.push(`/posts/${post.id}`)" class="btn">Открыть</my-button>
       <my-button @click="$emit('remove', post)" class="btn">Удалить</my-button>
     </div>
   </div>
@@ -35,8 +37,10 @@ export default {
   justify-content: space-between;
   box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
 }
-
 .btn {
   margin-left: 20px;
+}
+.post__btns {
+  display: flex;
 }
 </style>

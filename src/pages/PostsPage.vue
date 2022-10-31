@@ -87,7 +87,7 @@ export default {
         this.isError = false;
         this.isPostsLoading = true;
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/psts",
+          "https://jsonplaceholder.typicode.com/posts",
           {
             params: {
               _page: this.page,
