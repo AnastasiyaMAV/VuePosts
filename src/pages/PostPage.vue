@@ -15,6 +15,7 @@
 
     <post-list
       :posts="sortedAndSeachedPosts"
+      :btn="true"
       @remove="removePost"
       v-if="!isPostsLoading"
     />
@@ -86,7 +87,7 @@ export default {
         this.isError = false;
         this.isPostsLoading = true;
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts",
+          "https://jsonplaceholder.typicode.com/psts",
           {
             params: {
               _page: this.page,

@@ -1,6 +1,12 @@
 <template>
   <div class="navbar">
-    <img :src="home" class="icon" v-on:click="$router.push('/')" />
+    <img
+      :src="home"
+      class="icon"
+      v-on:click="$router.push('/')"
+      v-on:mouseover="onHover"
+      v-on:mouseleave="offHover"
+    />
     <div class="navbar__btns">
       <my-button @click="$router.push('/posts')">Посты</my-button>
       <my-button @click="$router.push('/about')">О сайте</my-button>
@@ -9,12 +15,21 @@
 </template>
 
 <script>
-import home from '@/component/assets/icon-home.png'
+import home from "@/component/assets/icon-home.png";
 export default {
-    data() {
+  data() {
     return {
-      home
+      home,
     };
+  },
+  methods: {
+    onHover: function (event) {
+      event.target.style.boxShadow =
+        "0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset";
+    },
+    offHover: function (event) {
+      event.target.style.boxShadow = "0px 5px 10px 2px rgba(34, 60, 80, 0.2)";
+    },
   },
 };
 </script>
@@ -35,5 +50,8 @@ export default {
 }
 .icon {
   width: 25px;
+  padding: 5px;
+  border: 1px solid black;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
 }
 </style>

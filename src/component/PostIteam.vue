@@ -4,7 +4,7 @@
       <div><strong>Название:</strong> {{ post.title }}</div>
       <div><strong>Описание:</strong> {{ post.body }}</div>
     </div>
-    <div class="post__btns">
+    <div class="post__btns" v-if="btn">
       <my-button @click="$emit('remove', post)" class="btn">Удалить</my-button>
     </div>
   </div>
@@ -15,6 +15,10 @@ export default {
   props: {
     post: {
       type: Object,
+      required: true,
+    },
+    btn: {
+      type: Boolean,
       required: true,
     },
   },

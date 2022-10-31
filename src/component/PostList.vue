@@ -5,6 +5,7 @@
         v-for="post in posts"
         :key="post.id"
         :post="post"
+        :btn="btn"
         @remove="$emit('remove', post)"
       />
     </transition-group>
@@ -19,6 +20,10 @@ export default {
   props: {
     posts: {
       type: Array,
+      required: true,
+    },
+    btn: {
+      type: Boolean,
       required: true,
     },
   },

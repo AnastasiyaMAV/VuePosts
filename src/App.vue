@@ -20,7 +20,6 @@ export default {
   box-sizing: border-box;
 }
 .app {
-  height: 100vh;
   background: rgb(227, 225, 225);
 }
 </style>
