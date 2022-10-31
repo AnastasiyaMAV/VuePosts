@@ -16,21 +16,14 @@
 
 <script>
 import home from "@/component/assets/icon-home.png";
+import hoverMixin from "@/mixins/hoverMixin";
 export default {
   data() {
     return {
       home,
     };
   },
-  methods: {
-    onHover: function (event) {
-      event.target.style.boxShadow =
-        "0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset";
-    },
-    offHover: function (event) {
-      event.target.style.boxShadow = "0px 5px 10px 2px rgba(34, 60, 80, 0.2)";
-    },
-  },
+  mixins: [hoverMixin],
 };
 </script>
 

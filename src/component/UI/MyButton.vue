@@ -5,18 +5,10 @@
 </template>
 
 <script>
+import hoverMixin from "@/mixins/hoverMixin"
 export default {
   name: "my-button",
-  methods: {
-    onHover: function (event) {
-      event.target.style.boxShadow =
-        "0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset";
-    },
-    offHover: function (event) {
-      event.target.style.boxShadow =
-        "0px 5px 10px 2px rgba(34, 60, 80, 0.2)";
-    },
-  },
+  mixins: [hoverMixin],
 };
 </script>
 
