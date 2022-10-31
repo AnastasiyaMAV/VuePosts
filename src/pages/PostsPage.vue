@@ -19,7 +19,7 @@
       @remove="removePost"
       v-if="!isPostsLoading"
     />
-    <div ref="observer" class="observer"></div>
+    <div v-intersection="loadMorePosts" class="observer"></div>
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
     <my-loading v-if="isPostsLoading" />
@@ -131,17 +131,17 @@ export default {
   mounted() {
     this.fetchPosts();
 
-    const options = {
-      rootMargin: "50px",
-      threshold: 1,
-    };
-    const callback = (entries) => {
-      if (entries[0].isIntersecting) {
-        this.loadMorePosts();
-      }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer);
+  //   const options = {
+  //     rootMargin: "50px",
+  //     threshold: 1,
+  //   };
+  //   const callback = (entries) => {
+  //     if (entries[0].isIntersecting) {
+  //       this.loadMorePosts();
+  //     }
+  //   };
+  //   const observer = new IntersectionObserver(callback, options);
+  //   observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
