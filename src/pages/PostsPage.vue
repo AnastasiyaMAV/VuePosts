@@ -23,21 +23,6 @@
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
     <my-loading v-if="isPostsLoading" />
-    
-
-    <!-- <div class="page__wrapper">
-      <div
-        class="page"
-        :class="{
-          current_page: page === pageNumber,
-        }"
-        v-for="pageNumber in totalPages"
-        :key="pageNumber"
-        @click="changePage(pageNumber)"
-      >
-        {{ pageNumber }}
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -72,16 +57,15 @@ export default {
       this.posts.push(post);
       this.isDialogVisible = false;
     },
+
     removePost(post) {
       this.posts = this.posts.filter((p) => p.id !== post.id);
     },
+
     showDialog() {
       this.isDialogVisible = true;
     },
-    // changePage(pageNumber) {
-    //   this.page = pageNumber;
-    //   this.fetchPosts();
-    // },
+
     async fetchPosts() {
       try {
         this.isError = false;
@@ -106,6 +90,7 @@ export default {
         this.isPostsLoading = false;
       }
     },
+
     async loadMorePosts() {
       try {
         this.page += 1;
@@ -130,18 +115,6 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-
-  //   const options = {
-  //     rootMargin: "50px",
-  //     threshold: 1,
-  //   };
-  //   const callback = (entries) => {
-  //     if (entries[0].isIntersecting) {
-  //       this.loadMorePosts();
-  //     }
-  //   };
-  //   const observer = new IntersectionObserver(callback, options);
-  //   observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
@@ -169,16 +142,5 @@ export default {
   justify-content: space-around;
   padding: 5px;
 }
-/* .page__wrapper {
-  display: flex;
-  margin-top: 15px;
-}
-.page {
-  border: 1px solid black;
-  padding: 10px;
-}
-.current_page {
-  border: 3px solid green;
-} */
 
 </style>
