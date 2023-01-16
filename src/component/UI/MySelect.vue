@@ -31,12 +31,12 @@ export default {
       default: () => [],
     },
   },
+  mixins: [hoverMixin],
   methods: {
     changeOption(event) {
       this.$emit("update:modelValue", event.target.value);
     },
   },
-  mixins: [hoverMixin],
 };
 </script>
 

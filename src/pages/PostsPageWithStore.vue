@@ -5,7 +5,7 @@
       <my-input
         :model-value="searchQuery"
         @update:model-value="setSearchQuery"
-        placeholder="Поиск..."
+        placeholder="Поиск по названию..."
       />
       <div class="head__btns">
         <my-button @click="showDialog">Создать пост</my-button>

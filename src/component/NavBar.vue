@@ -9,8 +9,9 @@
     />
     <div class="navbar__btns">
       <my-button @click="$router.push('/posts')">Посты</my-button>
-      <my-button @click="$router.push('/about')">О сайте</my-button>
-      <my-button @click="$router.push('/store')">Стор</my-button>
+      <my-button @click="$router.push('/about')">Цель проекта</my-button>
+      <my-button @click="$router.push('/store')">Vuex</my-button>
+      <my-button @click="$router.push('/сomposition')">Composition api</my-button>
     </div>
   </div>
 </template>

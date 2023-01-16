@@ -2,7 +2,7 @@
   <div>
     <div class="head">
       <h1>Страница с постами</h1>
-      <my-input v-model="searchQuery" placeholder="Поиск..." />
+      <my-input v-model="searchQuery" placeholder="Поиск по названию..." />
       <div class="head__btns">
         <my-button @click="showDialog">Создать пост</my-button>
         <my-select v-model="selectedSort" :options="sortOptions"></my-select>
