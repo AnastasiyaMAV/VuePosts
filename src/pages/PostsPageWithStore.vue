@@ -2,6 +2,7 @@
   <div>
     <div class="head">
       <h1>Страница с постами</h1>
+      <h2>VueX</h2>
       <my-input
         :model-value="searchQuery"
         @update:model-value="setSearchQuery"

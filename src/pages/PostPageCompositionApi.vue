@@ -2,9 +2,9 @@
   <div>
     <div class="head">
       <h1>Страница с постами</h1>
+      <h2>Composition Api</h2>
       <my-input v-model="searchQuery" placeholder="Поиск по названию..." />
       <div class="head__btns">
-        <my-button @click="showDialog">Создать пост</my-button>
         <my-select v-model="selectedSort" :options="sortOptions" />
       </div>
     </div>
@@ -61,4 +61,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.head__btns {
+  display: flex;
+  justify-content: flex-start;
+}
+</style>

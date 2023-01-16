@@ -1,6 +1,6 @@
 <template>
   <div v-if="posts.length > 0">
-    <transition-group name="user-list">
+    <transition-group name="post-list">
       <post-iteam
         v-for="post in posts"
         :key="post.id"
@@ -35,20 +35,20 @@ export default {
   color: red;
   text-align: center;
 }
-.user-list-item {
+.post-list-item {
   display: inline-block;
   margin-right: 10px;
 }
-.user-list-enter-active,
-.user-list-leave-active {
+.post-list-enter-active,
+.post-list-leave-active {
   transition: all 0.4s ease;
 }
-.user-list-enter-from,
-.user-list-leave-to {
+.post-list-enter-from,
+.post-list-leave-to {
   opacity: 0;
   transform: translateX(130px);
 }
-.user-list-move {
+.post-list-move {
   transition: transform 0.4s ease;
 }
 </style>

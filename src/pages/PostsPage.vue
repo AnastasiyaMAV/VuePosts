@@ -19,7 +19,7 @@
       @remove="removePost"
       v-if="!isPostsLoading"
     />
-    <div v-intersection="loadMorePosts" class="observer"></div>
+    <div v-intersection="loadMorePosts" class="observer" />
 
     <my-error v-if="isError">Ошибка! Повторите позже!</my-error>
     <my-loading v-if="isPostsLoading" />
@@ -132,7 +132,6 @@ export default {
 </script>
 
 <style>
-
 .head {
   margin: 25px;
   text-align: center;
@@ -142,5 +141,4 @@ export default {
   justify-content: space-around;
   padding: 5px;
 }
-
 </style>
